@@ -76,7 +76,6 @@ const handleCommuneChange = async () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none'; // Masque le sélecteur au démarrage
-    checkInitialCodePostal();
 });
 
 codePostalInput.addEventListener("input", updateCommuneOptions);
