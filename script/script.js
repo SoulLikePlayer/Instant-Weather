@@ -94,7 +94,7 @@ const ouvrirParametres = () => {
 };
 
 const fermerParametres = () => {
-    parametresDiv.classList.toggle("invisible");
+    parametresDiv.classList.toggle("visible");
     // parametresDiv.style.width = "0";
     // iconeParametres.style.opacity = "1";
 };
