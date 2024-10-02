@@ -48,7 +48,7 @@ const getWeather = async (inseeCode) => {
     try {
         const response = await fetch(apiWeatherUrl + inseeCode);
         const weatherData = await response.json();
-        return weatherData.forecast;
+        return weatherData;
     } catch (error) {
         console.error("Erreur lors de la récupération des données météo :", error);
         return null;
@@ -56,12 +56,16 @@ const getWeather = async (inseeCode) => {
 };
 
 const displayWeather = (weatherData) => {
-    if (weatherData && weatherData.length > 0) {
+    if (weatherData && weatherData.forecast) {
         resultDiv.innerHTML = `<h3>Prévisions météorologiques</h3>`;
-        weatherData.slice(0, nbJoursInput.value).forEach((weather, index) => {
+        weatherData.forecast.slice(0, nbJoursInput.value).forEach((weather) => {
+            const date = new Date(weather.datetime);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = date.toLocaleDateString('fr-FR', options);
+
             resultDiv.innerHTML += `
                 <div class="weather-day">
-                    <span>Jour ${index + 1} :</span>
+                    <span> ${weatherData.city.name} - ${formattedDate} :</span>
                     <p>Température minimale : ${weather.tmin}°C</p>
                     <p>Température maximale : ${weather.tmax}°C</p>
                     <p>Probabilité de pluie : ${weather.probarain}%</p>
