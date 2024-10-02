@@ -138,6 +138,32 @@ footer {
     margin: 5px 0;
 }
 
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 1.1em;
+    color: #343a40;
+}
+
+.parametres {
+    margin-top: 20px;
+}
+
+.parametres label {
+    font-weight: bold;
+}
+
 @media screen and (max-width: 600px) {
     body {
         font-size: 5vw;
@@ -153,6 +179,10 @@ footer {
     }
 
     footer {
+        font-size: 4vw;
+    }
+
+    .checkbox-label {
         font-size: 4vw;
     }
 }

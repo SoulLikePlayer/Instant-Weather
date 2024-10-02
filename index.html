@@ -26,6 +26,29 @@
             <a href="javascript:void(0)" id="iconeCroix" class="iconeCroix">&times;</a>
             <div>Nombre de jours à afficher (de 1 à 7) :</div>
             <input id="nbJours" type="number" min="1" max="7" value="1">
+            <div class="form-group mt-3">
+                <label>Informations supplémentaires :</label><br>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="latCheckbox" checked>
+                    <label for="latCheckbox" class="checkbox-label">Latitude décimale</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="lonCheckbox" checked>
+                    <label for="lonCheckbox" class="checkbox-label">Longitude décimale</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="pluieCheckbox" checked>
+                    <label for="pluieCheckbox" class="checkbox-label">Cumul de pluie (mm)</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="ventCheckbox" checked>
+                    <label for="ventCheckbox" class="checkbox-label">Vent moyen (km/h)</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="directionCheckbox" checked>
+                    <label for="directionCheckbox" class="checkbox-label">Direction du vent (°)</label>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">

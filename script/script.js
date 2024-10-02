@@ -66,6 +66,11 @@ const displayWeather = (weatherData) => {
                     <p>Température maximale : ${weather.tmax}°C</p>
                     <p>Probabilité de pluie : ${weather.probarain}%</p>
                     <p>Heures d'ensoleillement : ${weather.sun_hours}h</p>
+                    ${document.getElementById('latCheckbox').checked ? `<p>Latitude : ${weather.latitude}</p>` : ''}
+                    ${document.getElementById('lonCheckbox').checked ? `<p>Longitude : ${weather.longitude}</p>` : ''}
+                    ${document.getElementById('pluieCheckbox').checked ? `<p>Cumul de pluie : ${weather.rr10} mm</p>` : ''}
+                    ${document.getElementById('ventCheckbox').checked ? `<p>Vent moyen : ${weather.wind10m} km/h</p>` : ''}
+                    ${document.getElementById('directionCheckbox').checked ? `<p>Direction du vent : ${weather.dirwind10m}°</p>` : ''}
                 </div>
             `;
         });
