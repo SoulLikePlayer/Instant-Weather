@@ -1,8 +1,10 @@
-/*768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78*/
-
+const nbJoursInput = document.getElementById("nbJours");
 const codePostalInput = document.getElementById("codePostal");
 const communeSelect = document.getElementById("commune");
 const resultDiv = document.getElementById("result");
+const parametresDiv = document.getElementById("parametres");
+const iconeParametres = document.getElementById("iconeParametres");
+const iconeCroix = document.getElementById("iconeCroix");
 
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
@@ -74,10 +76,36 @@ const handleCommuneChange = async () => {
     }
 };
 
+const handlenbJoursChange = () => {
+    const nbJours = nbJoursInput.value;
+    
+    if (/^[1-7]{1}$/.test(nbJours)) {
+        console.log("gg");
+    } else {
+        nbJoursInput.value = "1";
+    }
+};
+
+const ouvrirParametres = () => {
+    parametresDiv.classList.toggle("visible");
+    // parametresDiv.style.width = "100px";
+    
+    // iconeParametres.style.opacity = "0";
+};
+
+const fermerParametres = () => {
+    parametresDiv.classList.toggle("invisible");
+    // parametresDiv.style.width = "0";
+    // iconeParametres.style.opacity = "1";
+};
+
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none'; // Masque le sélecteur au démarrage
-    checkInitialCodePostal();
 });
 
+nbJoursInput.addEventListener("input", handlenbJoursChange);
 codePostalInput.addEventListener("input", updateCommuneOptions);
 communeSelect.addEventListener("change", handleCommuneChange);
+
+iconeParametres.addEventListener("click", ouvrirParametres);
+iconeCroix.addEventListener("click", fermerParametres);
