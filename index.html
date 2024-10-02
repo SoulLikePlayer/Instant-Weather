@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Instant Weather - Prévisions météo instantanées">
+    <meta name="description" content="Instant Weather">
     <title>Instant Weather</title>
-    <!-- Lien vers Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Foundation CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.7.6/css/foundation.min.css">
     <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
-    <header class="bg-primary text-white text-center py-5">
-        <h1>Instant Weather</h1>
-        <p class="lead">Votre source instantanée pour la météo</p>
-    </header>
-
-    <main class="container mt-5">
-        <div class="text-center mb-4">
-            <h2>Entrez votre code postal</h2>
-        </div>
-        <div class="card mx-auto" style="max-width: 400px;">
-            <div class="card-body">
-                <label for="codePostal" class="form-label">Votre code postal :</label>
-                <input type="text" id="codePostal" class="form-control" placeholder="Ex: 75001" aria-label="Code postal">
-                
-                <label for="commune" class="form-label mt-3">Choisissez une commune :</label>
-                <select id="commune" class="form-select" aria-label="Commune">
-                    <option value="12345">Exemple</option>
-                </select>
-                
-                <button class="btn btn-primary mt-4" id="submitButton">Soumettre</button>
+    <div class="grid-container">
+        <header class="grid-x grid-padding-x align-middle">
+            <div class="cell text-center">
+                <h1>Instant Weather</h1>
             </div>
-        </div>
-        <div id="result" class="mt-4"></div>
-    </main>
+        </header>
 
-    <footer class="bg-light text-center py-3 mt-5">
-        <p class="mb-0">Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
-    </footer>
+        <main>
+            <div class="grid-x grid-padding-x">
+                <div class="cell small-12 medium-6 large-4">
+                    <label>Votre code postal :</label>
+                    <input id="codePostal" type="text" placeholder="Entrez votre code postal" class="input-group-field">
+                </div>
+                <div class="cell small-12 medium-6 large-4">
+                    <label for="commune">Choisir une commune :</label>
+                    <select id="commune" class="input-group-field">
+                        <option value="12345">Exemple</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-x grid-padding-x">
+                <div class="cell small-12">
+                    <div id="result" class="callout"></div>
+                </div>
+            </div>
+        </main>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <footer class="grid-x grid-padding-x">
+            <div class="cell text-center">
+                <p>Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Foundation JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.7.6/js/foundation.min.js" defer></script>
     <script src="./script/script.js" defer></script>
 </body>
 </html>
