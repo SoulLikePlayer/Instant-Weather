@@ -4,6 +4,11 @@ body {
     justify-content: center;
     text-align: center;
 }
+.container{
+    display:block;
+    border: 0.5vw solid black;
+    padding: 1vmax 5vmax;
+}
 
 select, input {
     display:block;
@@ -19,6 +24,14 @@ select, input {
 input {
     width: 10vw;
     text-align: center;
+}
+
+#result>p {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    width: 20vw;
+    /*background-color: rgb(14, 6, 82);*/
 }
 
 footer {
