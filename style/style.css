@@ -15,3 +15,13 @@ select, input {
     font-family: Lucida;
     margin-bottom: 2vw;
 }
+
+input {
+    width: 10vw;
+    text-align: center;
+}
+
+footer {
+    margin-bottom : 0;
+    font-size: min(10vw, 20px);
+}
