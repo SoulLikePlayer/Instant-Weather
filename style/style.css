@@ -4,11 +4,6 @@ body {
     justify-content: center;
     text-align: center;
 }
-.container{
-    display:block;
-    border: 0.5vw solid black;
-    padding: 1vmax 5vmax;
-}
 
 select, input {
     display:block;
@@ -26,14 +21,14 @@ input {
     text-align: center;
 }
 
+footer {
+    margin-bottom : 0;
+    font-size: min(10vw, 20px);
+}
+
 #result>p {
     display: inline-block;
     align-items: center;
     justify-content: center;
-    width: 20vw;
-}
-
-footer {
-    margin-bottom : 0;
-    font-size: min(10vw, 20px);
+    width: auto;
 }

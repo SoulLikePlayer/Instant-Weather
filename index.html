@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Instant Weather">
-        <title>Instant Weather</title>
-        <link rel="stylesheet" href="./style/style.css">
-    </head>
-    <body>
-        <header>
-            <h1>Instant Weather</h1>
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instant Weather - Prévisions météo instantanées">
+    <title>Instant Weather</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-5">
+        <h1>Instant Weather</h1>
+        <p class="lead">Votre source instantanée pour la météo</p>
+    </header>
 
-        <main>
-            <label class="container">
-                <div>Votre code postal :</div>
-                <input id="codePostal">
-
-                <select id="commune">
+    <main class="container mt-5">
+        <div class="text-center mb-4">
+            <h2>Entrez votre code postal</h2>
+        </div>
+        <div class="card mx-auto" style="max-width: 400px;">
+            <div class="card-body">
+                <label for="codePostal" class="form-label">Votre code postal :</label>
+                <input type="text" id="codePostal" class="form-control" placeholder="Ex: 75001" aria-label="Code postal">
+                
+                <label for="commune" class="form-label mt-3">Choisissez une commune :</label>
+                <select id="commune" class="form-select" aria-label="Commune">
                     <option value="12345">Exemple</option>
                 </select>
-            </label>
-            <div id="result"></div>
-        </main>
+                
+                <button class="btn btn-primary mt-4" id="submitButton">Soumettre</button>
+            </div>
+        </div>
+        <div id="result" class="mt-4"></div>
+    </main>
 
-        <footer>
-            <p>Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
-        </footer>
+    <footer class="bg-light text-center py-3 mt-5">
+        <p class="mb-0">Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
+    </footer>
 
-        <script src="./script/script.js" defer></script>
-    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./script/script.js" defer></script>
+</body>
 </html>
