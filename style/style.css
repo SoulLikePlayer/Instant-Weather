@@ -1,27 +1,110 @@
 body {
-    font-family: Lucida;
+    font-family: Lucida, sans-serif;
     font-size: min(10vw, 30px);
     justify-content: center;
     text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    padding: 20px;
 }
 
 select, input {
-    display:block;
-    margin:0 auto;
-    justify-content: center;
+    display: block;
+    margin: 0 auto;
     padding: 1vmax 5vmax;
-    border:0.1vmax solid black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: min(10vw, 30px);
-    font-family: Lucida;
+    font-family: Lucida, sans-serif;
     margin-bottom: 2vw;
+    width: 90%;
+    max-width: 300px;
 }
 
 input {
-    width: 10vw;
     text-align: center;
 }
 
 footer {
-    margin-bottom : 0;
+    margin-top: 20px;
     font-size: min(10vw, 20px);
+}
+
+.parametres {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 0, 0, 0.9);
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+.visible {
+    width: 100px;
+}
+
+.invisible {
+    width: 0;
+}
+
+.parametres a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.parametres a:hover {
+    color: #f1f1f1;
+}
+
+.parametres .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 6vw;
+    }
+
+    select, input {
+        width: 80%;
+        font-size: 8vw;
+    }
+
+    .parametres a {
+        font-size: 20px;
+    }
+
+    footer {
+        font-size: 8vw;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .parametres {
+        padding-top: 15px;
+    }
+
+    .parametres a {
+        font-size: 18px;
+    }
 }
