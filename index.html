@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Instant Weather">
-        <title>Instant Weather</title>
-        <link rel="stylesheet" href="./style/style.css">
-    </head>
-    <body>
-        <header>
-            <h1>Instant Weather</h1>
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instant Weather">
+    <title>Instant Weather</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Instant Weather</h1>
+    </header>
 
-        <main>
-            <a href="javascript:void(0)" id="iconeParametres" class="iconeParametres">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M24 13.616v-3.232c-1.651-.587-2.694-.752-3.219-2.019v-.001c-.527-1.271.1-2.134.847-3.707l-2.285-2.285c-1.561.742-2.433 1.375-3.707.847h-.001c-1.269-.526-1.435-1.576-2.019-3.219h-3.232c-.582 1.635-.749 2.692-2.019 3.219h-.001c-1.271.528-2.132-.098-3.707-.847l-2.285 2.285c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02v3.232c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847h.001c1.27.526 1.436 1.579 2.019 3.219h3.232c.582-1.636.75-2.69 2.027-3.222h.001c1.262-.524 2.12.101 3.698.851l2.285-2.286c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021zm-12 2.384c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z"/>
-                </svg>
-            </a>
+    <main class="container mt-4">
+        <div class="text-right mb-3">
+            <button id="iconeParametres" class="btn btn-outline-light rounded-circle settings-button" aria-label="Open settings">
+                <i class="fas fa-cog fa-lg"></i>
+            </button>
+        </div>
 
-            <div id="parametres" class="parametres">
-                <a href="javascript:void(0)" id="iconeCroix" class="iconeCroix">&times;</a>
-                <div>Nombre de jours à afficher (de 1 à 7) :</div>
-                <input id="nbJours" type="number" min="1" max="7" value="1">
-            </div>
+        <div id="parametres" class="parametres">
+            <a href="javascript:void(0)" id="iconeCroix" class="iconeCroix">&times;</a>
+            <div>Nombre de jours à afficher (de 1 à 7) :</div>
+            <input id="nbJours" type="number" min="1" max="7" value="1">
+        </div>
 
-            <label>
-                <div>Votre code postal :</div>
-                <input id="codePostal">
-                <select id="commune"></select>
-            </label>
-            <div id="result"></div>
-        </main>
+        <div class="form-group">
+            <label for="codePostal">Votre code postal :</label>
+            <input id="codePostal" class="form-control" placeholder="Entrez votre code postal">
+            <select id="commune" class="form-control mt-2"></select>
+        </div>
 
-        <footer>
-            <p>Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
-        </footer>
+        <div id="result" class="result mt-4"></div>
+    </main>
 
-        <script src="./script/script.js" defer></script>
-    </body>
+    <footer class="bg-light text-center py-3">
+        <p>Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./script/script.js" defer></script>
+</body>
 </html>

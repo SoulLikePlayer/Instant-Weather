@@ -1,33 +1,61 @@
-body {
-    font-family: Lucida, sans-serif;
-    font-size: min(10vw, 30px);
-    justify-content: center;
-    text-align: center;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    color: #343a40;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 header {
-    background-color: #f8f9fa;
+    background-color: #007bff;
+    color: white;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+    text-transform: uppercase;
 }
 
 main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
+}
+
+label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }
 
 select, input {
     display: block;
     margin: 0 auto;
-    padding: 1vmax 5vmax;
-    border: 1px solid #ccc;
+    padding: 1vmax 2vmax;
+    border: 1px solid #007bff;
     border-radius: 5px;
-    font-size: min(10vw, 30px);
-    font-family: Lucida, sans-serif;
-    margin-bottom: 2vw;
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
     width: 90%;
-    max-width: 300px;
+    max-width: 400px;
+}
+
+select:focus, input:focus {
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
 }
 
 input {
@@ -36,16 +64,10 @@ input {
 
 footer {
     margin-top: 20px;
-    font-size: min(10vw, 20px);
+    font-size: 1em;
+    color: #6c757d;
 }
 
-
-#result>p {
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-}
 .parametres {
     height: 100%;
     width: 0;
@@ -53,14 +75,14 @@ footer {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgba(255, 0, 0, 0.9);
+    background-color: rgba(0, 157, 255, 0.8);
     overflow-x: hidden;
     padding-top: 60px;
     transition: 0.5s;
 }
 
 .visible {
-    width: 100px;
+    width: 300px;
 }
 
 .invisible {
@@ -68,9 +90,9 @@ footer {
 }
 
 .parametres a {
-    padding: 8px 8px 8px 32px;
+    padding: 15px 20px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.5em;
     color: #fff;
     display: block;
     transition: 0.3s;
@@ -87,22 +109,51 @@ footer {
     font-size: 36px;
 }
 
+.result {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-day {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.weather-day:hover {
+    transform: translateY(-5px);
+}
+
+.weather-day span {
+    font-weight: bold;
+}
+
+.weather-day p {
+    margin: 5px 0;
+}
+
 @media screen and (max-width: 600px) {
     body {
-        font-size: 6vw;
+        font-size: 5vw;
     }
 
     select, input {
         width: 80%;
-        font-size: 8vw;
+        font-size: 4vw;
     }
 
     .parametres a {
-        font-size: 20px;
+        font-size: 4vw;
     }
 
     footer {
-        font-size: 8vw;
+        font-size: 4vw;
     }
 }
 
