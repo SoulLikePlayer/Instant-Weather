@@ -1,6 +1,5 @@
 const codePostalInput = document.getElementById("codePostal");
 const communeSelect = document.getElementById("commune");
-const validerButton = document.getElementById("valider");
 const resultDiv = document.getElementById("result");
 
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
@@ -18,11 +17,9 @@ const getCommunes = async (codePostal) => {
 
 const updateCommuneOptions = async () => {
     const codePostal = codePostalInput.value;
-    
-    if (codePostal.length === 5) {
+    if (codePostal.length === 5 && /^\d+$/.test(codePostal)) {
         const communes = await getCommunes(codePostal);
         communeSelect.innerHTML = "";
-
         if (communes.length > 0) {
             communes.forEach(commune => {
                 const option = document.createElement("option");
@@ -30,9 +27,14 @@ const updateCommuneOptions = async () => {
                 option.textContent = commune.nom;
                 communeSelect.appendChild(option);
             });
+            communeSelect.style.display = 'block'; // Affiche le sélecteur de communes
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
+            communeSelect.style.display = 'block'; // Affiche le sélecteur même s'il n'y a pas de commune
         }
+    } else {
+        communeSelect.innerHTML = "";
+        communeSelect.style.display = 'none'; // Masque le sélecteur de communes
     }
 };
 
@@ -60,15 +62,20 @@ const displayWeather = (weather) => {
     }
 };
 
-codePostalInput.addEventListener("input", updateCommuneOptions);
-
-validerButton.addEventListener("click", async () => {
+const handleCommuneChange = async () => {
     const selectedCommuneCode = communeSelect.value;
-    
     if (selectedCommuneCode) {
         const weather = await getWeather(selectedCommuneCode);
         displayWeather(weather);
     } else {
         resultDiv.innerHTML = "<p>Veuillez sélectionner une commune.</p>";
     }
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    communeSelect.style.display = 'none'; // Masque le sélecteur au démarrage
+    checkInitialCodePostal();
 });
+
+codePostalInput.addEventListener("input", updateCommuneOptions);
+communeSelect.addEventListener("change", handleCommuneChange);
