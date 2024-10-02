@@ -1,0 +1,18 @@
+body {
+    font-family: Lucida;
+    font-size: min(10vw, 30px);
+    justify-content: center;
+    text-align: center;
+}
+
+select, input {
+    display:block;
+    margin:0 auto;
+    justify-content: center;
+    padding: 1vmax 5vmax;
+    border:0.1vmax solid black;
+    font-size: min(10vw, 30px);
+    font-family: Lucida;
+    margin-bottom: 2vw;
+}
+
