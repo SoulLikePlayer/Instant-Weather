@@ -3,10 +3,33 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Instant Weather">
         <title>Instant Weather</title>
+        <link rel="stylesheet" href="./style/style.css">
     </head>
     <body>
-        <h1>Instant Weather</h1>
-        <label>
+        <header>
+            <h1>Instant Weather</h1>
+        </header>
+
+        <main>
+            <label>
+                <div>Votre code postal :</div>
+                <input id="codePostal">
+
+                <select id="commune">
+                    <option value="12345">Exemple</option>
+                </select>
+
+                <button id="valider">Valider</button>
+            </label>
+            <div id="result"></div>
+        </main>
+
+        <footer>
+            <p>Site réalisé par Louis Lazare, Clémence Pavy et Macéo David - 2024</p>
+        </footer>
+
+        <script src="./script/script.js" defer></script>
     </body>
 </html>
