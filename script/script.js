@@ -1,3 +1,5 @@
+/*768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78*/
+
 const codePostalInput = document.getElementById("codePostal");
 const communeSelect = document.getElementById("commune");
 const resultDiv = document.getElementById("result");
