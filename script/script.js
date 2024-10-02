@@ -30,13 +30,19 @@ const updateCommuneOptions = async () => {
                 communeSelect.appendChild(option);
             });
             communeSelect.style.display = 'block'; // Affiche le sélecteur de communes
+            
+            // Affiche la météo pour la première commune
+            const weather = await getWeather(communes[0].code);
+            displayWeather(weather);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
             communeSelect.style.display = 'block'; // Affiche le sélecteur même s'il n'y a pas de commune
+            resultDiv.innerHTML = ""; // Efface les résultats météo
         }
     } else {
         communeSelect.innerHTML = "";
         communeSelect.style.display = 'none'; // Masque le sélecteur de communes
+        resultDiv.innerHTML = ""; // Efface les résultats météo
     }
 };
 
@@ -76,8 +82,8 @@ const handleCommuneChange = async () => {
 
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none'; // Masque le sélecteur au démarrage
-    checkInitialCodePostal();
 });
 
 codePostalInput.addEventListener("input", updateCommuneOptions);
 communeSelect.addEventListener("change", handleCommuneChange);
+
