@@ -60,33 +60,33 @@ const updateCommuneOptions = async () => {
 
 // Fonction utilitaire pour obtenir l'icône et la description de la météo
 const getWeatherIconAndDescription = (weather) => {
-    let weatherImage = "../ressources/Meteo/Couleur/Soleil.png";
+    let weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
     let meteoDescription = 'Ciel dégagé et ensoleillé';
 
     // Conditions pour diverses nuances de météo
     if (weather.probarain > 90 && weather.tmin < 0) {
-        weatherImage = "../ressources/Meteo/Couleur/Neige.png";
+        weatherImage = "./ressources/Meteo/Couleur/Neige.png";
         meteoDescription = 'Neige prévue, temps froid et neigeux';
     } else if (weather.probarain > 70) {
-        weatherImage = "../ressources/Meteo/Couleur/Pluie.png";
+        weatherImage = "./ressources/Meteo/Couleur/Pluie.png";
         meteoDescription = 'Pluie abondante attendue, pensez à prendre un parapluie';
     } else if (weather.probarain > 30) {
-        weatherImage = "../ressources/Meteo/Couleur/Nuage.png";
+        weatherImage = "./ressources/Meteo/Couleur/Nuage.png";
         meteoDescription = 'Ciel couvert avec des chances de pluie';
     } else if (weather.probarain > 0) {
-        weatherImage = "../ressources/Meteo/Couleur/SoleilPluie.png"; // Utiliser une image pour soleil avec pluie
+        weatherImage = "./ressources/Meteo/Couleur/SoleilPluie.png"; // Utiliser une image pour soleil avec pluie
         meteoDescription = 'Soleil avec quelques averses possibles';
     } else if (weather.sun_hours > 6) {
-        weatherImage = "../ressources/Meteo/Couleur/SoleilNuage.png"; // Utiliser une image pour soleil nuageux
+        weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png"; // Utiliser une image pour soleil nuageux
         meteoDescription = 'Soleil avec des nuages épars, temps agréable';
     } else if (weather.wind10m > 50) {
-        weatherImage = "../ressources/Meteo/Couleur/Vent.png";
+        weatherImage = "./ressources/Meteo/Couleur/Vent.png";
         meteoDescription = 'Conditions venteuses, attention aux rafales';
     } else if (weather.probarain > 50 && weather.wind10m > 30) {
-        weatherImage = "../ressources/Meteo/Couleur/Orage.png"; // Ajouter une icône pour les orages
+        weatherImage = "./ressources/Meteo/Couleur/Orage.png"; // Ajouter une icône pour les orages
         meteoDescription = 'Orage possible avec des rafales de vent';
     } else {
-        weatherImage = "../ressources/Meteo/Couleur/Soleil.png";
+        weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
         meteoDescription = 'Ciel dégagé et ensoleillé';
     }
 
