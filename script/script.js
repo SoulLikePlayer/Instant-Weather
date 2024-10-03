@@ -57,7 +57,6 @@ const getWeather = async (inseeCode) => {
 
 const displayWeather = (weatherData) => {
     if (weatherData && weatherData.forecast) {
-        resultDiv.innerHTML = `<h3>Prévisions météorologiques</h3>`;
         weatherData.forecast.slice(0, nbJoursInput.value).forEach((weather) => {
             const date = new Date(weather.datetime);
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
