@@ -124,20 +124,50 @@ footer {
     margin: 10px 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    width: 100%;
+    max-width: 600px;
 }
 
 .weather-day:hover {
     transform: translateY(-5px);
 }
 
-.weather-day span {
+/* Section principale avec l'image et les températures */
+.weather-main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.weather-icon {
+    width: 20vw; /* Taille réduite de l'image */
+    height: 20vw;
+    margin-right: 15px;
+}
+
+.weather-main div {
+    flex-grow: 1;
+}
+
+.weather-main span {
     font-weight: bold;
+    display: block;
 }
 
-.weather-day p {
+/* Section des détails supplémentaires */
+.weather-details {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.weather-details p {
     margin: 5px 0;
+    font-size: 0.9em;
+    color: #555;
 }
 
+/* Checkbox container style */
 .checkbox-container {
     display: flex;
     align-items: center;
@@ -164,6 +194,7 @@ footer {
     font-weight: bold;
 }
 
+/* Responsive styles for small screens */
 @media screen and (max-width: 600px) {
     body {
         font-size: 5vw;
@@ -184,6 +215,11 @@ footer {
 
     .checkbox-label {
         font-size: 4vw;
+    }
+
+    .weather-icon {
+        width: 10vw; 
+        height: 50px;
     }
 }
 

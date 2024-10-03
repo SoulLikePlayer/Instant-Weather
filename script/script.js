@@ -63,18 +63,40 @@ const displayWeather = (weatherData) => {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const formattedDate = date.toLocaleDateString('fr-FR', options);
 
+            // Choisir une image de météo selon la probabilité de pluie (par exemple)
+            let weatherImage = "../ressources/Meteo/Couleur/Soleil.png";
+            let meteo = 'grand soleil';
+            if (weather.probarain > 70) {
+                weatherImage = "../ressources/Meteo/Couleur/Pluie.png";
+                meteo = 'Pluie';
+            } else if (weather.probarain > 30) {
+                weatherImage = "../ressources/Meteo/Couleur/Nuage.png";
+                meteo = 'Couvert';
+            }
+
             resultDiv.innerHTML += `
                 <div class="weather-day">
-                    <span> ${weatherData.city.name} - ${formattedDate} :</span>
-                    <p>Température minimale : ${weather.tmin}°C</p>
-                    <p>Température maximale : ${weather.tmax}°C</p>
-                    <p>Probabilité de pluie : ${weather.probarain}%</p>
-                    <p>Heures d'ensoleillement : ${weather.sun_hours}h</p>
-                    ${document.getElementById('latCheckbox').checked ? `<p>Latitude : ${weather.latitude}</p>` : ''}
-                    ${document.getElementById('lonCheckbox').checked ? `<p>Longitude : ${weather.longitude}</p>` : ''}
-                    ${document.getElementById('pluieCheckbox').checked ? `<p>Cumul de pluie : ${weather.rr10} mm</p>` : ''}
-                    ${document.getElementById('ventCheckbox').checked ? `<p>Vent moyen : ${weather.wind10m} km/h</p>` : ''}
-                    ${document.getElementById('directionCheckbox').checked ? `<p>Direction du vent : ${weather.dirwind10m}°</p>` : ''}
+                    <!-- Section 1 : Météo principale -->
+                    <div class="weather-main">
+                        <img src="./images/${weatherImage}" alt="Météo" class="weather-icon">
+                        <div>
+                            <span>${weatherData.city.name} - ${formattedDate} :</span>
+                            <h1>${meteo}</h1>
+                            <p>Température minimale : ${weather.tmin}°C</p>
+                            <p>Température maximale : ${weather.tmax}°C</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 : Informations supplémentaires -->
+                    <div class="weather-details">
+                        <p>Probabilité de pluie : ${weather.probarain}%</p>
+                        <p>Heures d'ensoleillement : ${weather.sun_hours}h</p>
+                        ${document.getElementById('latCheckbox').checked ? `<p>Latitude : ${weather.latitude}</p>` : ''}
+                        ${document.getElementById('lonCheckbox').checked ? `<p>Longitude : ${weather.longitude}</p>` : ''}
+                        ${document.getElementById('pluieCheckbox').checked ? `<p>Cumul de pluie : ${weather.rr10} mm</p>` : ''}
+                        ${document.getElementById('ventCheckbox').checked ? `<p>Vent moyen : ${weather.wind10m} km/h</p>` : ''}
+                        ${document.getElementById('directionCheckbox').checked ? `<p>Direction du vent : ${weather.dirwind10m}°</p>` : ''}
+                    </div>
                 </div>
             `;
         });
