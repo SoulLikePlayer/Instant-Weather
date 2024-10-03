@@ -74,4 +74,3 @@ Nous sommes ouverts aux contributions et aux suggestions d'améliorations ! 😄
 ---
 
 <p align="center"> Fait avec ❤️ par Louis Lazare, Macéo David et Clémence Pavy </p>
-<p align="center"> Fait avec ❤️ par Louis Lazare, Macéo David et Clémence Pavy </p>
