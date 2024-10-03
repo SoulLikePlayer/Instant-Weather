@@ -1,4 +1,3 @@
-// Sélection des éléments DOM
 const nbJoursInput = document.getElementById("nbJours");
 const codePostalInput = document.getElementById("codePostal");
 const communeSelect = document.getElementById("commune");
@@ -7,11 +6,9 @@ const parametresDiv = document.getElementById("parametres");
 const iconeParametres = document.getElementById("iconeParametres");
 const iconeCroix = document.getElementById("iconeCroix");
 
-// API URL
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
 
-// Gestion des appels aux APIs
 const getCommunes = async (codePostal) => {
     try {
         const response = await fetch(`${apiGeoUrl}${codePostal}`);
@@ -34,7 +31,6 @@ const getWeather = async (inseeCode) => {
     }
 };
 
-// Mise à jour des options de communes
 const updateCommuneOptions = async () => {
     const codePostal = codePostalInput.value.trim();
     if (codePostal.length === 5 && /^\d+$/.test(codePostal)) {
@@ -58,12 +54,10 @@ const updateCommuneOptions = async () => {
     }
 };
 
-// Fonction utilitaire pour obtenir l'icône et la description de la météo
 const getWeatherIconAndDescription = (weather) => {
     let weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
     let meteoDescription = 'Ciel dégagé et ensoleillé';
 
-    // Conditions pour diverses nuances de météo
     if (weather.probarain > 90 && weather.tmin < 0) {
         weatherImage = "./ressources/Meteo/Couleur/Neige.png";
         meteoDescription = 'Neige prévue, temps froid et neigeux';
@@ -74,27 +68,23 @@ const getWeatherIconAndDescription = (weather) => {
         weatherImage = "./ressources/Meteo/Couleur/Nuage.png";
         meteoDescription = 'Ciel couvert avec des chances de pluie';
     } else if (weather.probarain > 0) {
-        weatherImage = "./ressources/Meteo/Couleur/SoleilPluie.png"; // Utiliser une image pour soleil avec pluie
+        weatherImage = "./ressources/Meteo/Couleur/SoleilPluie.png";
         meteoDescription = 'Soleil avec quelques averses possibles';
     } else if (weather.sun_hours > 6) {
-        weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png"; // Utiliser une image pour soleil nuageux
+        weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png";
         meteoDescription = 'Soleil avec des nuages épars, temps agréable';
     } else if (weather.wind10m > 50) {
         weatherImage = "./ressources/Meteo/Couleur/Vent.png";
         meteoDescription = 'Conditions venteuses, attention aux rafales';
     } else if (weather.probarain > 50 && weather.wind10m > 30) {
-        weatherImage = "./ressources/Meteo/Couleur/Orage.png"; // Ajouter une icône pour les orages
+        weatherImage = "./ressources/Meteo/Couleur/Orage.png";
         meteoDescription = 'Orage possible avec des rafales de vent';
-    } else {
-        weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
-        meteoDescription = 'Ciel dégagé et ensoleillé';
     }
 
     return { weatherImage, meteoDescription };
 };
-// Affichage des données météo
+
 const displayWeather = (weatherData) => {
-    // Vider le contenu précédent
     resultDiv.innerHTML = ""; 
     
     if (!weatherData || !weatherData.forecast) {
@@ -102,10 +92,8 @@ const displayWeather = (weatherData) => {
         return;
     }
 
-    // Limiter le nombre de jours au minimum de 1 et au maximum de 7 jours
     const nbJours = Math.min(Math.max(parseInt(nbJoursInput.value, 10), 1), 7);
     
-    // Utiliser un tableau pour stocker le contenu HTML à insérer
     const weatherHTML = [];
 
     weatherData.forecast.slice(0, nbJours).forEach((weather) => {
@@ -114,13 +102,10 @@ const displayWeather = (weatherData) => {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
-        // Choisir l'icône et la description en fonction des conditions météo
         const { weatherImage, meteoDescription } = getWeatherIconAndDescription(weather);
 
-        // Stocker chaque jour météo dans une chaîne
         weatherHTML.push(`
             <div class="weather-day">
-                <!-- Section principale : Affichage des informations météo -->
                 <div class="weather-main">
                     <img src="${weatherImage}" alt="Météo" class="weather-icon">
                     <div>
@@ -131,7 +116,6 @@ const displayWeather = (weatherData) => {
                     </div>
                 </div>
 
-                <!-- Section supplémentaire : Affichage des détails météo si cochés -->
                 <div class="weather-details">
                     <p>Probabilité de pluie : ${weather.probarain}%</p>
                     <p>Heures d'ensoleillement : ${weather.sun_hours}h</p>
@@ -145,13 +129,9 @@ const displayWeather = (weatherData) => {
         `);
     });
 
-    // Injecter tout le contenu HTML d'un seul coup
     resultDiv.innerHTML = weatherHTML.join('');
 };
 
-
-
-// Gestion du changement de commune
 const handleCommuneChange = async (selectedCommuneCode) => {
     if (selectedCommuneCode) {
         const weatherData = await getWeather(selectedCommuneCode);
@@ -161,18 +141,16 @@ const handleCommuneChange = async (selectedCommuneCode) => {
     }
 };
 
-// Gestion de la modification du nombre de jours
 const handlenbJoursChange = () => {
     const nbJours = parseInt(nbJoursInput.value, 10);
     nbJoursInput.value = nbJours < 1 || nbJours > 7 ? "1" : nbJours.toString();
+    if (communeSelect.value) handleCommuneChange(communeSelect.value);
 };
 
-// Gestion des paramètres d'affichage
 const toggleParametres = () => {
     parametresDiv.classList.toggle("visible");
 };
 
-// Initialisation lors du chargement de la page
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
     nbJoursInput.addEventListener("input", handlenbJoursChange);
@@ -180,4 +158,7 @@ window.addEventListener('DOMContentLoaded', () => {
     communeSelect.addEventListener("change", () => handleCommuneChange(communeSelect.value));
     iconeParametres.addEventListener("click", toggleParametres);
     iconeCroix.addEventListener("click", toggleParametres);
+    
+    const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.addEventListener('change', () => handleCommuneChange(communeSelect.value)));
 });
