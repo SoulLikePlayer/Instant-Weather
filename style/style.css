@@ -275,7 +275,7 @@ input[type='checkbox'] {
 footer {
     margin-top: 20px;
     font-size: 1em;
-    color: #6c757d;
+    color: #000000ce;
 }
 
 .parametres label {
@@ -317,16 +317,4 @@ footer {
     .parametres a {
         font-size: 18px;
     }
-}
-
-.test {
-    color: black;
-    /*background-image: linear-gradient(210deg, #1ea7c6ce, #c6c6c6ce, #ffffff); /*Nuage*/
-    background-image: linear-gradient(210deg, #979797ce, #5f99ccce, #ffffff); /*Pluie*/
-    /*background-image: linear-gradient(210deg, #ffd23f46, #a6adb944, #ffffff); /*Orage*/
-    /*background-image: linear-gradient(210deg, #fbc01f49, #ffe29149, #ffffff); /*Soleil*/
-    /*background-image: linear-gradient(210deg, #98deea41, #d6e4e848, #ffffff); /*Neige*/
-    /*background-image: linear-gradient(210deg, #fedb4148, #30b6e746, #ffffff); /*Soleil Nuage*/
-    /*background-image: linear-gradient(210deg, #fedb415e, #c6c6c64d, #a4d6ff52, #ffffff); /*Soleil Nuage Pluie*/
-    /*background-image: linear-gradient(210deg, #becace54, #77dcee52, #ffffff); /*Vent*/
 }
