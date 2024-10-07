@@ -110,7 +110,7 @@ const displayWeather = (weatherData) => {
                     <img src="${weatherImage}" alt="Météo" class="weather-icon">
                     <div>
                         <span>${weatherData.city.name} - ${formattedDate} :</span>
-                        <h1>${meteoDescription}</h1>
+                        <h1 class="weather-textIcon">${meteoDescription}</h1>
                         <p>Température minimale : ${weather.tmin}°C</p>
                         <p>Température maximale : ${weather.tmax}°C</p>
                     </div>

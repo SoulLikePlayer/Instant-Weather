@@ -193,6 +193,7 @@ footer {
 .weather-day h1 {
     font-size: 1.5em; /* Réduit la taille du texte */
     margin: 10px 0;
+    font-weight: 700;
 }
 
 .weather-day p {
@@ -236,7 +237,7 @@ footer {
 }
 
 /* Styles responsives */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 999px) {
     body {
         font-size: 5vw; /* Réduire la taille de la police sur les petits écrans */
     }
@@ -250,9 +251,14 @@ footer {
         width: 100%; /* La carte météo prendra toute la largeur */
     }
 
+    .weather-textIcon {
+        font-size: 6vw !important;
+    }
+
     .weather-icon {
-        width: 10vw; /* Ajuster la taille de l'icône pour les petits écrans */
-        height: auto; /* Pour maintenir les proportions */
+        display: none;
+        /*width: 10vw; /* Ajuster la taille de l'icône pour les petits écrans */
+        /*height: auto; /* Pour maintenir les proportions */
     }
 }
 
