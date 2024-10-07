@@ -156,8 +156,6 @@ const handleCommuneChange = async (selectedCommuneCode) => {
 };
 
 const handlenbJoursChange = () => {
-    const nbJours = parseInt(nbJoursInput.value, 10);
-    nbJoursInput.value = nbJours < 1 || nbJours > 7 ? "1" : nbJours.toString();
     if (communeSelect.value) handleCommuneChange(communeSelect.value);
 };
 
@@ -168,7 +166,6 @@ const toggleParametres = () => {
 };
 
 const hideSettings = event => {
-    // if ([headerSection, mainSection, footerSection].some(section => section.contains(event?.target)) && parametresDiv.classList.contains("visible")) {
     if (event?.target?.id === "background" && parametresDiv.classList.contains("visible")) {
         toggleParametres();
     }
