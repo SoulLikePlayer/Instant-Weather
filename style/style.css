@@ -45,6 +45,12 @@ main {
     padding: 20px;
 }
 
+.form-group{
+    border: solid;
+    backdrop-filter: blur(0.26vw);
+    padding: 3vw;
+}
+
 label {
     font-size: 1.2em;
     margin-bottom: 10px;
