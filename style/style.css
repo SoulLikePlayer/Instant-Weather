@@ -40,7 +40,8 @@ label {
     margin-bottom: 10px;
 }
 
-select, input {
+select,
+input {
     display: block;
     margin: 0 auto;
     padding: 1vmax 2vmax;
@@ -52,7 +53,8 @@ select, input {
     max-width: 400px;
 }
 
-select:focus, input:focus {
+select:focus,
+input:focus {
     border-color: #0056b3;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
@@ -113,9 +115,62 @@ footer {
     margin-top: 20px;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
+
+.loader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.outer,
+.middle,
+.inner {
+  border: 3px solid transparent;
+  border-top-color: #3cefff;
+  border-right-color: #3cefff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.outer {
+  width: 3.5em;
+  height: 3.5em;
+  margin-left: -1.75em;
+  margin-top: -1.75em;
+  animation: spin 2s linear infinite;
+}
+
+.middle {
+  width: 2.1em;
+  height: 2.1em;
+  margin-left: -1.05em;
+  margin-top: -1.05em;
+  animation: spin 1.75s linear reverse infinite;
+}
+
+.inner {
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: -0.4em;
+  margin-top: -0.4em;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 
 .weather-day {
     background-color: white;
@@ -124,39 +179,80 @@ footer {
     margin: 10px 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
+    width: calc(33.333% - 20px);
+    max-width: 400px;
+    flex-grow: 1;
+    text-align: left; /* Alignement centré */
 }
 
-.weather-day:hover {
-    transform: translateY(-5px);
-}
-
-.weather-day span {
-    font-weight: bold;
+/* Style du texte dans les cartes météo */
+.weather-day h1 {
+    font-size: 1.5em; /* Réduit la taille du texte */
+    margin: 10px 0;
 }
 
 .weather-day p {
+    font-size: 1em; /* Ajuste la taille des paragraphes */
     margin: 5px 0;
 }
 
+.weather-main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.weather-icon {
+    width: 60px; /* Ajuste la taille de l'icône */
+    height: 60px;
+    margin-right: 15px;
+}
+
+/* Style pour les détails météo */
+.weather-details {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* Styles pour le footer */
+footer {
+    margin-top: 20px;
+    font-size: 1em;
+    color: #6c757d;
+}
+
+/* Styles pour les paramètres */
+.parametres {
+    margin-top: 20px;
+}
+
+.parametres label {
+    font-weight: bold;
+}
+
+/* Styles responsives */
 @media screen and (max-width: 600px) {
     body {
-        font-size: 5vw;
+        font-size: 5vw; /* Réduire la taille de la police sur les petits écrans */
     }
 
     select, input {
         width: 80%;
-        font-size: 4vw;
+        font-size: 4vw; /* Réduire la taille de la police sur les petits écrans */
     }
 
-    .parametres a {
-        font-size: 4vw;
+    .weather-day {
+        width: 100%; /* La carte météo prendra toute la largeur */
     }
 
-    footer {
-        font-size: 4vw;
+    .weather-icon {
+        width: 10vw; /* Ajuster la taille de l'icône pour les petits écrans */
+        height: auto; /* Pour maintenir les proportions */
     }
 }
 
+/* Responsivité pour les détails météo */
 @media screen and (max-height: 450px) {
     .parametres {
         padding-top: 15px;
