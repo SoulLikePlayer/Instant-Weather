@@ -8,6 +8,7 @@ const iconeCroix = document.getElementById("iconeCroix");
 const headerSection = document.getElementById("headerSection");
 const mainSection = document.getElementById("mainSection");
 const footerSection = document.getElementById("footerSection");
+const backgroundDiv = document.getElementById("background");
 
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
@@ -152,10 +153,12 @@ const handlenbJoursChange = () => {
 
 const toggleParametres = () => {
     parametresDiv.classList.toggle("visible");
+    backgroundDiv.classList.toggle("invisible");
 };
 
 const hideSettings = event => {
-    if ([headerSection, mainSection, footerSection].some(section => section.contains(event?.target)) && parametresDiv.classList.contains("visible")) {
+    // if ([headerSection, mainSection, footerSection].some(section => section.contains(event?.target)) && parametresDiv.classList.contains("visible")) {
+    if (event?.target?.id === "background" && parametresDiv.classList.contains("visible")) {
         toggleParametres();
     }
 };

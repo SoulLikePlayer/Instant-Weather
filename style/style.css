@@ -95,8 +95,21 @@ footer {
     transition: 0.5s;
 }
 
+.modalBackdrop  {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color:rgba(0,0,0,0.2);
+}
+
 .visible {
     width: min(350px, 100%);
+}
+
+.invisible {
+    display: none;
 }
 
 .parametres a {
