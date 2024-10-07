@@ -5,6 +5,9 @@ const resultDiv = document.getElementById("result");
 const parametresDiv = document.getElementById("parametres");
 const iconeParametres = document.getElementById("iconeParametres");
 const iconeCroix = document.getElementById("iconeCroix");
+const headerSection = document.getElementById("headerSection");
+const mainSection = document.getElementById("mainSection");
+const footerSection = document.getElementById("footerSection");
 
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
@@ -39,7 +42,7 @@ const updateCommuneOptions = async () => {
 
         if (communes.length > 0) {
             communes.forEach(({ code, nom }) => {
-                communeSelect.add(new Option(nom, code));
+                communeSelect.add(new Option(`${nom} (${code})`, code));
             });
             communeSelect.style.display = 'block';
             await handleCommuneChange(communes[0].code);
@@ -151,6 +154,12 @@ const toggleParametres = () => {
     parametresDiv.classList.toggle("visible");
 };
 
+const hideSettings = event => {
+    if ([headerSection, mainSection, footerSection].some(section => section.contains(event?.target)) && parametresDiv.classList.contains("visible")) {
+        toggleParametres();
+    }
+};
+
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
     nbJoursInput.addEventListener("input", handlenbJoursChange);
@@ -161,4 +170,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
     const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]');
     checkboxes.forEach(checkbox => checkbox.addEventListener('change', () => handleCommuneChange(communeSelect.value)));
+
+    document.addEventListener("click", hideSettings);
 });
+
