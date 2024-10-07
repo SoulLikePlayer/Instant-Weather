@@ -60,36 +60,36 @@ const updateCommuneOptions = async () => {
 const getWeatherIconAndDescription = (weather) => {
     let weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
     let meteoDescription = 'Ciel dégagé et ensoleillé';
-    let backgroundGradient = 'linear-gradient(210deg, #fbc01f, #ffe291, #ffffff)'; // Par défaut pour le soleil
+    let backgroundGradient = 'linear-gradient(210deg, #fbc01fce, #ffe291ce, #ffffff)'; // Par défaut pour le soleil
 
     if (weather.probarain > 90 && weather.tmin < 0) {
         weatherImage = "./ressources/Meteo/Couleur/NeigeNuage.png";
         meteoDescription = 'Neige prévue, temps froid et neigeux';
-        backgroundGradient = 'linear-gradient(210deg, #98deea, #d6e4e8, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #98deeace, #d6e4e8ce, #ffffff)'; /*Neige*/ 
     } else if (weather.probarain > 70) {
         weatherImage = "./ressources/Meteo/Couleur/Pluie.png";
         meteoDescription = 'Pluie abondante attendue, pensez à prendre un parapluie';
-        backgroundGradient = 'linear-gradient(210deg, #979797, #5f99cc, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #979797ce, #5f99ccce, #ffffff)'; /*Pluie*/
     } else if (weather.probarain > 30) {
         weatherImage = "./ressources/Meteo/Couleur/Nuage.png";
         meteoDescription = 'Ciel couvert avec des chances de pluie';
-        backgroundGradient = 'linear-gradient(210deg, #1ea6c6, #c6c6c6, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #1ea7c6ce, #c6c6c6ce, #ffffff)'; /*Nuage*/ 
     } else if (weather.probarain > 0) {
         weatherImage = "./ressources/Meteo/Couleur/SoleilPluie.png";
         meteoDescription = 'Soleil avec quelques averses possibles';
-        backgroundGradient = 'linear-gradient(210deg, #fedb41, #c6c6c6, #a4d6ff, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #fedb41ce, #c6c6c6ce, #a4d6ffce, #ffffff)'; /*Pluie Nuage Soleil*/
     } else if (weather.sun_hours > 6) {
         weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png";
         meteoDescription = 'Soleil avec des nuages épars, temps agréable';
-        backgroundGradient = 'linear-gradient(210deg, #fedb41, #30b6e7, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #fedb41ce, #30b6e7ce, #ffffff)'; /*Nuage Soleil*/
     } else if (weather.wind10m > 50) {
         weatherImage = "./ressources/Meteo/Couleur/VentNuage.png";
         meteoDescription = 'Conditions venteuses, attention aux rafales';
-        backgroundGradient = 'linear-gradient(210deg, #becace, #77dcee, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #becacece, #77dceece, #ffffff)'; /*Vent*/
     } else if (weather.probarain > 50 && weather.wind10m > 30) {
         weatherImage = "./ressources/Meteo/Couleur/Orage.png";
         meteoDescription = 'Orage possible avec des rafales de vent';
-        backgroundGradient = 'linear-gradient(210deg, #ffd33f, #a6adb9, #ffffff)';
+        backgroundGradient = 'linear-gradient(210deg, #ffd33fce, #a6adb9ce, #ffffff)'; /*Orage*/
     }
 
     return { weatherImage, meteoDescription, backgroundGradient };
