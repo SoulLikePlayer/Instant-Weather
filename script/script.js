@@ -61,32 +61,41 @@ const updateCommuneOptions = async () => {
 const getWeatherIconAndDescription = (weather) => {
     let weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
     let meteoDescription = 'Ciel dégagé et ensoleillé';
+    let backgroundGradient = 'linear-gradient(210deg, #fbc01f, #ffe291, #ffffff)'; // Par défaut pour le soleil
 
     if (weather.probarain > 90 && weather.tmin < 0) {
         weatherImage = "./ressources/Meteo/Couleur/NeigeNuage.png";
         meteoDescription = 'Neige prévue, temps froid et neigeux';
+        backgroundGradient = 'linear-gradient(210deg, #98deea, #d6e4e8, #ffffff)';
     } else if (weather.probarain > 70) {
         weatherImage = "./ressources/Meteo/Couleur/Pluie.png";
         meteoDescription = 'Pluie abondante attendue, pensez à prendre un parapluie';
+        backgroundGradient = 'linear-gradient(210deg, #979797, #5f99cc, #ffffff)';
     } else if (weather.probarain > 30) {
         weatherImage = "./ressources/Meteo/Couleur/Nuage.png";
         meteoDescription = 'Ciel couvert avec des chances de pluie';
+        backgroundGradient = 'linear-gradient(210deg, #1ea6c6, #c6c6c6, #ffffff)';
     } else if (weather.probarain > 0) {
         weatherImage = "./ressources/Meteo/Couleur/SoleilPluie.png";
         meteoDescription = 'Soleil avec quelques averses possibles';
+        backgroundGradient = 'linear-gradient(210deg, #fedb41, #c6c6c6, #a4d6ff, #ffffff)';
     } else if (weather.sun_hours > 6) {
         weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png";
         meteoDescription = 'Soleil avec des nuages épars, temps agréable';
+        backgroundGradient = 'linear-gradient(210deg, #fedb41, #30b6e7, #ffffff)';
     } else if (weather.wind10m > 50) {
         weatherImage = "./ressources/Meteo/Couleur/VentNuage.png";
         meteoDescription = 'Conditions venteuses, attention aux rafales';
+        backgroundGradient = 'linear-gradient(210deg, #becace, #77dcee, #ffffff)';
     } else if (weather.probarain > 50 && weather.wind10m > 30) {
         weatherImage = "./ressources/Meteo/Couleur/Orage.png";
         meteoDescription = 'Orage possible avec des rafales de vent';
+        backgroundGradient = 'linear-gradient(210deg, #ffd33f, #a6adb9, #ffffff)';
     }
 
-    return { weatherImage, meteoDescription };
+    return { weatherImage, meteoDescription, backgroundGradient };
 };
+
 
 const displayWeather = (weatherData) => {
     resultDiv.innerHTML = ""; 
@@ -106,15 +115,15 @@ const displayWeather = (weatherData) => {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
-        const { weatherImage, meteoDescription } = getWeatherIconAndDescription(weather);
+        const { weatherImage, meteoDescription, backgroundGradient } = getWeatherIconAndDescription(weather);
 
         weatherHTML.push(`
-            <div class="weather-day">
+            <div class="weather-day" style="background-image: ${backgroundGradient};">
                 <div class="weather-main">
                     <img src="${weatherImage}" alt="Météo" class="weather-icon">
                     <div>
                         <span>${weatherData.city.name} - ${formattedDate} :</span>
-                        <h1>${meteoDescription}</h1>
+                        <h1 class="weather-textIcon">${meteoDescription}</h1>
                         <p>Température minimale : ${weather.tmin}°C</p>
                         <p>Température maximale : ${weather.tmax}°C</p>
                     </div>
@@ -135,6 +144,7 @@ const displayWeather = (weatherData) => {
 
     resultDiv.innerHTML = weatherHTML.join('');
 };
+
 
 const handleCommuneChange = async (selectedCommuneCode) => {
     if (selectedCommuneCode) {
