@@ -13,6 +13,10 @@ body {
     min-height: 100vh;
 }
 
+.noScrollbar {
+    overflow: hidden;
+}
+
 header {
     background-color: #007bff;
     color: white;

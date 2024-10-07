@@ -154,6 +154,7 @@ const handlenbJoursChange = () => {
 const toggleParametres = () => {
     parametresDiv.classList.toggle("visible");
     backgroundDiv.classList.toggle("invisible");
+    document.body.classList.toggle("noScrollbar");
 };
 
 const hideSettings = event => {
