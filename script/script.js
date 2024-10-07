@@ -59,7 +59,7 @@ const getWeatherIconAndDescription = (weather) => {
     let meteoDescription = 'Ciel dégagé et ensoleillé';
 
     if (weather.probarain > 90 && weather.tmin < 0) {
-        weatherImage = "./ressources/Meteo/Couleur/Neige.png";
+        weatherImage = "./ressources/Meteo/Couleur/NeigeNuage.png";
         meteoDescription = 'Neige prévue, temps froid et neigeux';
     } else if (weather.probarain > 70) {
         weatherImage = "./ressources/Meteo/Couleur/Pluie.png";
@@ -74,7 +74,7 @@ const getWeatherIconAndDescription = (weather) => {
         weatherImage = "./ressources/Meteo/Couleur/SoleilNuage.png";
         meteoDescription = 'Soleil avec des nuages épars, temps agréable';
     } else if (weather.wind10m > 50) {
-        weatherImage = "./ressources/Meteo/Couleur/Vent.png";
+        weatherImage = "./ressources/Meteo/Couleur/VentNuage.png";
         meteoDescription = 'Conditions venteuses, attention aux rafales';
     } else if (weather.probarain > 50 && weather.wind10m > 30) {
         weatherImage = "./ressources/Meteo/Couleur/Orage.png";
