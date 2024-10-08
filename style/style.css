@@ -85,8 +85,7 @@ footer {
 }
 
 .iconeParametres {
-    position: fixed;
-    left: 0;
+    left: 100%;
     font-size: 35px;
 }
 
@@ -271,5 +270,5 @@ footer {
 }
 
 .weather-day {
-    animation: pop 0.5s ease forwards; /* Ajoutez cette ligne */
+    animation: pop 0.5s ease forwards;
 }
