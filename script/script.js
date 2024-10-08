@@ -109,16 +109,19 @@ const displayWeather = (weatherData) => {
     
     const weatherHTML = [];
 
-    weatherData.forecast.slice(0, nbJours).forEach((weather) => {
+    weatherData.forecast.slice(0, nbJours).forEach((weather, index) => {
         const date = new Date(weather.datetime);
         const formattedDate = date.toLocaleDateString('fr-FR', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
         const { weatherImage, meteoDescription, backgroundGradient } = getWeatherIconAndDescription(weather);
+        
+        // Créez un délai d'animation basé sur l'index
+        const animationDelay = index * 100; // Délai de 100ms par carte
 
         weatherHTML.push(`
-            <div class="weather-day" style="background-image: ${backgroundGradient};">
+            <div class="weather-day" style="background-image: ${backgroundGradient}; animation-delay: ${animationDelay}ms;">
                 <div class="weather-main">
                     <img src="${weatherImage}" alt="Météo" class="weather-icon">
                     <div>
@@ -144,6 +147,7 @@ const displayWeather = (weatherData) => {
 
     resultDiv.innerHTML = weatherHTML.join('');
 };
+
 
 
 const handleCommuneChange = async (selectedCommuneCode) => {
