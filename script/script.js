@@ -73,15 +73,17 @@ const updateCommuneOptions = async () => {
 
         communeSelect.innerHTML = "";
         communeSelect.disabled = communes.length === 1;
-       
+        
         if (communes.length > 0) {
+            if (communes.length > 1) communeSelect.add(new Option("Sélectionnez une commune", "00000"));
+
             communes.forEach(({ code, nom }) => {
                 communeSelect.add(new Option(`${nom}`, code));
             });
 
             communeSelect.style.display = 'block';
 
-            await handleCommuneChange(communes[0].code);
+            if (communes.length === 1) await handleCommuneChange(communes[0].code);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
             communeSelect.style.display = 'block';
@@ -190,12 +192,11 @@ const displayWeather = (weatherData) => {
 
 const handleCommuneChange = async (selectedCommuneCode) => {
     const codePostal = codePostalInput.value;
-    if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
+    if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && !["Aucune commune trouvée", "00000"].includes(selectedCommuneCode)) {
         let weatherData;
 
         if (weatherCache.codeInsee === selectedCommuneCode) {
             weatherData = weatherCache;
-            console.log(weatherCache);
         } else {
             weatherData = await getWeather(selectedCommuneCode);
 
