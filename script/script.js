@@ -18,26 +18,40 @@ let previousCodePostal = codePostalInput.value;
 let codePostalCache = {},
     weatherCache = {};
 
+const showError = (responseOrError) => {
+    let errorMessage = "Une erreur est survenue";
+
+    if (responseOrError?.status && responseOrError?.statusText) {
+        errorMessage += `\n${responseOrError.status} ${responseOrError.statusText}`;
+    } else if (responseOrError?.status) {
+        errorMessage += `\nCode d'erreur : ${responseOrError.status}`;
+    } else if (responseOrError.message) {
+        errorMessage += `\nErreur : ${responseOrError.message}`;
+    }
+
+    alert(errorMessage);
+};
+
 const getCommunes = async (codePostal) => {
-    try {
-        const response = await fetch(`${apiGeoUrl}${codePostal}`);
-        if (!response.ok) throw new Error("Erreur réseau lors de la récupération des communes.");
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur lors de la récupération des communes :", error);
+    const response = await fetch(`${apiGeoUrl}${codePostal}`).catch(showError);
+
+    if (!response?.ok) {
+        if (response) showError(response);
         return [];
     }
+
+    return await response.json();
 };
 
 const getWeather = async (inseeCode) => {
-    try {
-        const response = await fetch(`${apiWeatherUrl}${inseeCode}`);
-        if (!response.ok) throw new Error("Erreur réseau lors de la récupération des données météo.");
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur lors de la récupération des données météo :", error);
+    const response = await fetch(`${apiWeatherUrl}${inseeCode}`).catch(showError);
+
+    if (!response?.ok) {
+        if (response) showError(response);
         return null;
     }
+
+    return await response.json();
 };
 
 const updateCommuneOptions = async () => {
@@ -183,6 +197,9 @@ const handleCommuneChange = async (selectedCommuneCode) => {
             weatherData = weatherCache;
         } else {
             weatherData = await getWeather(selectedCommuneCode);
+
+            if (!weatherData) return;
+
             weatherCache = weatherData;
             weatherCache.codePostal = codePostal;
         }
