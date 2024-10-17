@@ -121,7 +121,7 @@ const displayWeather = (weatherData) => {
         const animationDelay = index * 100; // Délai de 100ms par carte
 
         weatherHTML.push(`
-            <div class="weather-day" style="background-image: ${backgroundGradient}; animation-delay: ${animationDelay}ms;">
+            <div class="weather-day weather-start" style="background-image: ${backgroundGradient}; animation-delay: ${animationDelay}ms;">
                 <div class="weather-main">
                     <img src="${weatherImage}" alt="Météo" class="weather-icon">
                     <div>
@@ -133,19 +133,23 @@ const displayWeather = (weatherData) => {
                 </div>
 
                 <div class="weather-details">
-                    <p>Probabilité de pluie : ${weather.probarain}%</p>
-                    <p>Heures d'ensoleillement : ${weather.sun_hours}h</p>
-                    ${document.getElementById('latCheckbox').checked ? `<p>Latitude : ${weather.latitude}</p>` : ''}
-                    ${document.getElementById('lonCheckbox').checked ? `<p>Longitude : ${weather.longitude}</p>` : ''}
-                    ${document.getElementById('pluieCheckbox').checked ? `<p>Cumul de pluie : ${weather.rr10} mm</p>` : ''}
-                    ${document.getElementById('ventCheckbox').checked ? `<p>Vent moyen : ${weather.wind10m} km/h</p>` : ''}
-                    ${document.getElementById('directionCheckbox').checked ? `<p>Direction du vent : ${weather.dirwind10m}°</p>` : ''}
+                    <p><span class="fa-solid fa-droplet"></span> Probabilité de pluie : ${weather.probarain}%</p>
+                    <p><span class="fa-solid fa-sun"></span> Heures d'ensoleillement : ${weather.sun_hours}h</p>
+                    ${document.getElementById('latCheckbox').checked ? `<p><span class="fa-solid fa-globe"></span> Latitude : ${weather.latitude}</p>` : ''}
+                    ${document.getElementById('lonCheckbox').checked ? `<p><span class="fa-solid fa-globe"></span> Longitude : ${weather.longitude}</p>` : ''}
+                    ${document.getElementById('pluieCheckbox').checked ? `<p><span class="fa-solid fa-cloud-showers-heavy"></span> Cumul de pluie : ${weather.rr10} mm</p>` : ''}
+                    ${document.getElementById('ventCheckbox').checked ? `<p><span class="fa-solid fa-wind"></span> Vent moyen : ${weather.wind10m} km/h</p>` : ''}
+                    ${document.getElementById('directionCheckbox').checked ? `<p><span class="fa-solid fa-compass"></span> Direction du vent : ${weather.dirwind10m}°</p>` : ''}
                 </div>
             </div>
         `);
     });
-
     resultDiv.innerHTML = weatherHTML.join('');
+    setTimeout(() => {
+        document.querySelectorAll('.weather-start').forEach(card => {
+            card.classList.remove('weather-start');
+        });
+    }, 500);
 };
 
 
