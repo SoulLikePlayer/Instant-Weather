@@ -155,7 +155,7 @@ const displayWeather = (weatherData) => {
 
 
 const handleCommuneChange = async (selectedCommuneCode) => {
-    if (selectedCommuneCode) {
+    if (codePostalInput.value && selectedCommuneCode) {
         const weatherData = await getWeather(selectedCommuneCode);
         displayWeather(weatherData);
     } else {
