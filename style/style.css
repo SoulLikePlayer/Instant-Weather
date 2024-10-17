@@ -101,6 +101,10 @@ footer {
     transition: transform 0.2s ease;
 }
 
+.nbJours {
+    transform: scale(1.2);
+}
+
 .iconeParametres:hover {
     transform: rotate(90deg);
 }
@@ -273,6 +277,10 @@ input[type="checkbox"]:checked + label::before {
 
     .parametres.visible {
         width: 100%;
+    }
+
+    .nbJours {
+        transform: scale(1);
     }
 }
 
