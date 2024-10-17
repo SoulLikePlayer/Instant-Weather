@@ -13,40 +13,77 @@ const backgroundDiv = document.getElementById("background");
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
 
+let previousCodePostal = codePostalInput.value;
+
+let codePostalCache = {},
+    weatherCache = {};
+
+const showError = (responseOrError) => {
+    let errorMessage = "Une erreur est survenue";
+
+    if (responseOrError?.status && responseOrError?.statusText) {
+        errorMessage += `\n${responseOrError.status} ${responseOrError.statusText}`;
+    } else if (responseOrError?.status) {
+        errorMessage += `\nCode d'erreur : ${responseOrError.status}`;
+    } else if (responseOrError.message) {
+        errorMessage += `\nErreur : ${responseOrError.message}`;
+    }
+
+    alert(errorMessage);
+};
+
 const getCommunes = async (codePostal) => {
-    try {
-        const response = await fetch(`${apiGeoUrl}${codePostal}`);
-        if (!response.ok) throw new Error("Erreur réseau lors de la récupération des communes.");
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur lors de la récupération des communes :", error);
+    const response = await fetch(`${apiGeoUrl}${codePostal}`).catch(showError);
+
+    if (!response?.ok) {
+        if (response) showError(response);
         return [];
     }
+
+    return await response.json();
 };
 
 const getWeather = async (inseeCode) => {
-    try {
-        const response = await fetch(`${apiWeatherUrl}${inseeCode}`);
-        if (!response.ok) throw new Error("Erreur réseau lors de la récupération des données météo.");
-        return await response.json();
-    } catch (error) {
-        console.error("Erreur lors de la récupération des données météo :", error);
+    const response = await fetch(`${apiWeatherUrl}${inseeCode}`).catch(showError);
+
+    if (!response?.ok) {
+        if (response) showError(response);
         return null;
     }
+
+    return await response.json();
 };
 
 const updateCommuneOptions = async () => {
-    const codePostal = codePostalInput?.value?.trim();
-    if (codePostal?.length === 5 && /^\d+$/.test(codePostal)) {
-        const communes = await getCommunes(codePostal);
-        communeSelect.innerHTML = "";
+    if (codePostalInput.value && (!/^\d+$/.test(codePostalInput.value) || codePostalInput.value?.length > 5)) codePostalInput.value = previousCodePostal
 
-        if (communes.length > 0) {
-            communes.forEach(({ code, nom }) => {
-                communeSelect.add(new Option(`${nom} (${code})`, code));
+    if (codePostalInput.value?.length === 5 && /^\d+$/.test(codePostalInput.value)) {
+        let communes;
+
+        if (codePostalCache.codePostal === codePostalInput.value) {
+            communes = codePostalCache.data;
+        } else {
+            communes = await getCommunes(codePostalInput.value);
+            codePostalCache.codePostal = codePostalInput.value;
+            
+            codePostalCache.data = communes.map(({ code, nom }) => {
+                return { code, nom }
             });
+        }
+
+        communeSelect.innerHTML = "";
+        communeSelect.disabled = communes.length === 1;
+        
+        if (communes.length > 0) {
+            if (communes.length > 1) communeSelect.add(new Option("Sélectionnez une commune", "00000"));
+
+            communes.forEach(({ code, nom }) => {
+                communeSelect.add(new Option(`${nom}`, code));
+            });
+
             communeSelect.style.display = 'block';
-            await handleCommuneChange(communes[0].code);
+
+            if (communes.length === 1) await handleCommuneChange(communes[0].code);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
             communeSelect.style.display = 'block';
@@ -56,6 +93,8 @@ const updateCommuneOptions = async () => {
         communeSelect.style.display = 'none';
         resultDiv.innerHTML = "";
     }
+
+    previousCodePostal = codePostalInput.value;
 };
 
 const getWeatherIconAndDescription = (weather) => {
@@ -96,7 +135,6 @@ const getWeatherIconAndDescription = (weather) => {
     return { weatherImage, meteoDescription, backgroundGradient };
 };
 
-
 const displayWeather = (weatherData) => {
     resultDiv.innerHTML = ""; 
     
@@ -108,6 +146,8 @@ const displayWeather = (weatherData) => {
     const nbJours = Math.min(Math.max(parseInt(nbJoursInput.value, 10), 1), 7);
     
     const weatherHTML = [];
+    // Créez un délai d'animation qui sera basé sur l'index
+    let animationDelay;
 
     weatherData.forecast.slice(0, nbJours).forEach((weather, index) => {
         const date = new Date(weather.datetime);
@@ -117,8 +157,7 @@ const displayWeather = (weatherData) => {
 
         const { weatherImage, meteoDescription, backgroundGradient } = getWeatherIconAndDescription(weather);
         
-        // Créez un délai d'animation basé sur l'index
-        const animationDelay = index * 100; // Délai de 100ms par carte
+        animationDelay = index * 100; // Délai de 100ms par carte
 
         weatherHTML.push(`
             <div class="weather-day weather-start" style="background-image: ${backgroundGradient}; animation-delay: ${animationDelay}ms;">
@@ -149,15 +188,25 @@ const displayWeather = (weatherData) => {
         document.querySelectorAll('.weather-start').forEach(card => {
             card.classList.remove('weather-start');
         });
-    }, 500);
+    }, animationDelay * nbJours);
 };
 
-
-
 const handleCommuneChange = async (selectedCommuneCode) => {
-    const codePostal = codePostalInput?.value?.trim();
-    if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
-        const weatherData = await getWeather(selectedCommuneCode);
+    const codePostal = codePostalInput.value;
+    if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && !["Aucune commune trouvée", "00000"].includes(selectedCommuneCode)) {
+        let weatherData;
+
+        if (weatherCache.codeInsee === selectedCommuneCode) {
+            weatherData = weatherCache;
+        } else {
+            weatherData = await getWeather(selectedCommuneCode);
+
+            if (!weatherData) return;
+
+            weatherCache = weatherData;
+            weatherCache.codeInsee = selectedCommuneCode;
+        }
+
         displayWeather(weatherData);
     } else {
         resultDiv.innerHTML = "<p>Veuillez sélectionner une commune.</p>";
@@ -165,6 +214,7 @@ const handleCommuneChange = async (selectedCommuneCode) => {
 };
 
 const handlenbJoursChange = () => {
+    localStorage.nbJours = nbJoursInput.value;
     if (communeSelect.value) handleCommuneChange(communeSelect.value);
 };
 
@@ -182,14 +232,25 @@ const hideSettings = event => {
 
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
-    nbJoursInput.addEventListener("input", handlenbJoursChange);
+
     codePostalInput.addEventListener("input", updateCommuneOptions);
     communeSelect.addEventListener("change", () => handleCommuneChange(communeSelect.value));
     iconeParametres.addEventListener("click", toggleParametres);
     iconeCroix.addEventListener("click", toggleParametres);
     
+    // settings
+    if (localStorage.nbJours) nbJoursInput.value = localStorage.nbJours;
+    nbJoursInput.addEventListener("input", handlenbJoursChange);
+
     const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]');
-    checkboxes.forEach(checkbox => checkbox.addEventListener('change', () => handleCommuneChange(communeSelect.value)));
+    checkboxes.forEach(checkbox => {
+        if (localStorage[checkbox.id] === "false") checkbox.checked = false;
+
+        checkbox.addEventListener('change', () => {
+            localStorage[checkbox.id] = checkbox.checked;
+            handleCommuneChange(communeSelect.value)
+        });
+    });
 
     document.addEventListener("click", hideSettings);
 });
