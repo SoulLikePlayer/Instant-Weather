@@ -15,6 +15,8 @@ const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=76
 
 let previousCodePostal = codePostalInput.value;
 
+let cache = {};
+
 const getCommunes = async (codePostal) => {
     try {
         const response = await fetch(`${apiGeoUrl}${codePostal}`);
@@ -42,13 +44,17 @@ const updateCommuneOptions = async () => {
 
     if (codePostalInput.value?.length === 5 && /^\d+$/.test(codePostalInput.value)) {
         const communes = await getCommunes(codePostalInput.value);
-        communeSelect.innerHTML = "";
 
+        communeSelect.innerHTML = "";
+        communeSelect.disabled = communes.length === 1;
+       
         if (communes.length > 0) {
             communes.forEach(({ code, nom }) => {
                 communeSelect.add(new Option(`${nom} (${code})`, code));
             });
+
             communeSelect.style.display = 'block';
+
             await handleCommuneChange(communes[0].code);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
@@ -100,7 +106,6 @@ const getWeatherIconAndDescription = (weather) => {
 
     return { weatherImage, meteoDescription, backgroundGradient };
 };
-
 
 const displayWeather = (weatherData) => {
     resultDiv.innerHTML = ""; 
@@ -157,12 +162,19 @@ const displayWeather = (weatherData) => {
     }, 500);
 };
 
-
-
 const handleCommuneChange = async (selectedCommuneCode) => {
-    const codePostal = codePostalInput?.value?.trim();
+    const codePostal = codePostalInput.value;
     if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
-        const weatherData = await getWeather(selectedCommuneCode);
+        let weatherData;
+
+        if (cache.codePostal === codePostal) {
+            weatherData = cache;
+        } else {
+            weatherData = await getWeather(selectedCommuneCode);
+            cache = weatherData;
+            cache.codePostal = codePostal;
+        }
+
         displayWeather(weatherData);
     } else {
         resultDiv.innerHTML = "<p>Veuillez sélectionner une commune.</p>";
