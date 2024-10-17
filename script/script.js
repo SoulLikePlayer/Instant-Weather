@@ -187,7 +187,7 @@ const displayWeather = (weatherData) => {
         document.querySelectorAll('.weather-start').forEach(card => {
             card.classList.remove('weather-start');
         });
-    }, 500);
+    }, animationDelay * nbJours);
 };
 
 const handleCommuneChange = async (selectedCommuneCode) => {
