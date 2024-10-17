@@ -238,6 +238,14 @@ input[type="checkbox"]:checked + label::before {
 .weather-day h1 {
     font-size: 1.2em;
     margin: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;;
+    font-weight: bold;
+    padding-left: 0.5em;
+}
+
+.weather-day p {
+    padding-left: 0.5em;
 }
 
 .weather-details {
