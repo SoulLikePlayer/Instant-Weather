@@ -76,7 +76,7 @@ const updateCommuneOptions = async () => {
        
         if (communes.length > 0) {
             communes.forEach(({ code, nom }) => {
-                communeSelect.add(new Option(`${nom} (${code})`, code));
+                communeSelect.add(new Option(`${nom}`, code));
             });
 
             communeSelect.style.display = 'block';
@@ -193,15 +193,16 @@ const handleCommuneChange = async (selectedCommuneCode) => {
     if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
         let weatherData;
 
-        if (weatherCache.codePostal === codePostal) {
+        if (weatherCache.codeInsee === selectedCommuneCode) {
             weatherData = weatherCache;
+            console.log(weatherCache);
         } else {
             weatherData = await getWeather(selectedCommuneCode);
 
             if (!weatherData) return;
 
             weatherCache = weatherData;
-            weatherCache.codePostal = codePostal;
+            weatherCache.codeInsee = selectedCommuneCode;
         }
 
         displayWeather(weatherData);
