@@ -15,7 +15,8 @@ const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=76
 
 let previousCodePostal = codePostalInput.value;
 
-let cache = {};
+let codePostalCache = {},
+    weatherCache = {};
 
 const getCommunes = async (codePostal) => {
     try {
@@ -43,7 +44,18 @@ const updateCommuneOptions = async () => {
     if (codePostalInput.value && (!/^\d+$/.test(codePostalInput.value) || codePostalInput.value?.length > 5)) codePostalInput.value = previousCodePostal
 
     if (codePostalInput.value?.length === 5 && /^\d+$/.test(codePostalInput.value)) {
-        const communes = await getCommunes(codePostalInput.value);
+        let communes;
+
+        if (codePostalCache.codePostal === codePostalInput.value) {
+            communes = codePostalCache.data;
+        } else {
+            communes = await getCommunes(codePostalInput.value);
+            codePostalCache.codePostal = codePostalInput.value;
+            
+            codePostalCache.data = communes.map(({ code, nom }) => {
+                return { code, nom }
+            });
+        }
 
         communeSelect.innerHTML = "";
         communeSelect.disabled = communes.length === 1;
@@ -167,12 +179,12 @@ const handleCommuneChange = async (selectedCommuneCode) => {
     if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
         let weatherData;
 
-        if (cache.codePostal === codePostal) {
-            weatherData = cache;
+        if (weatherCache.codePostal === codePostal) {
+            weatherData = weatherCache;
         } else {
             weatherData = await getWeather(selectedCommuneCode);
-            cache = weatherData;
-            cache.codePostal = codePostal;
+            weatherCache = weatherData;
+            weatherCache.codePostal = codePostal;
         }
 
         displayWeather(weatherData);
