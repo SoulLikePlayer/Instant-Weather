@@ -146,6 +146,8 @@ const displayWeather = (weatherData) => {
     const nbJours = Math.min(Math.max(parseInt(nbJoursInput.value, 10), 1), 7);
     
     const weatherHTML = [];
+    // Créez un délai d'animation qui sera basé sur l'index
+    let animationDelay;
 
     weatherData.forecast.slice(0, nbJours).forEach((weather, index) => {
         const date = new Date(weather.datetime);
@@ -155,8 +157,7 @@ const displayWeather = (weatherData) => {
 
         const { weatherImage, meteoDescription, backgroundGradient } = getWeatherIconAndDescription(weather);
         
-        // Créez un délai d'animation basé sur l'index
-        const animationDelay = index * 100; // Délai de 100ms par carte
+        animationDelay = index * 100; // Délai de 100ms par carte
 
         weatherHTML.push(`
             <div class="weather-day weather-start" style="background-image: ${backgroundGradient}; animation-delay: ${animationDelay}ms;">
