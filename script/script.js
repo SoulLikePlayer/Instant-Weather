@@ -182,6 +182,7 @@ const handleCommuneChange = async (selectedCommuneCode) => {
 };
 
 const handlenbJoursChange = () => {
+    localStorage.nbJours = nbJoursInput.value;
     if (communeSelect.value) handleCommuneChange(communeSelect.value);
 };
 
@@ -199,14 +200,25 @@ const hideSettings = event => {
 
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
-    nbJoursInput.addEventListener("input", handlenbJoursChange);
+
     codePostalInput.addEventListener("input", updateCommuneOptions);
     communeSelect.addEventListener("change", () => handleCommuneChange(communeSelect.value));
     iconeParametres.addEventListener("click", toggleParametres);
     iconeCroix.addEventListener("click", toggleParametres);
     
+    // settings
+    if (localStorage.nbJours) nbJoursInput.value = localStorage.nbJours;
+    nbJoursInput.addEventListener("input", handlenbJoursChange);
+
     const checkboxes = document.querySelectorAll('.checkbox-container input[type="checkbox"]');
-    checkboxes.forEach(checkbox => checkbox.addEventListener('change', () => handleCommuneChange(communeSelect.value)));
+    checkboxes.forEach(checkbox => {
+        if (localStorage[checkbox.id] === "false") checkbox.checked = false;
+
+        checkbox.addEventListener('change', () => {
+            localStorage[checkbox.id] = checkbox.checked;
+            handleCommuneChange(communeSelect.value)
+        });
+    });
 
     document.addEventListener("click", hideSettings);
 });
