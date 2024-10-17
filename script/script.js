@@ -36,8 +36,8 @@ const getWeather = async (inseeCode) => {
 };
 
 const updateCommuneOptions = async () => {
-    const codePostal = codePostalInput.value.trim();
-    if (codePostal.length === 5 && /^\d+$/.test(codePostal)) {
+    const codePostal = codePostalInput?.value?.trim();
+    if (codePostal?.length === 5 && /^\d+$/.test(codePostal)) {
         const communes = await getCommunes(codePostal);
         communeSelect.innerHTML = "";
 
@@ -155,7 +155,8 @@ const displayWeather = (weatherData) => {
 
 
 const handleCommuneChange = async (selectedCommuneCode) => {
-    if (codePostalInput.value && selectedCommuneCode) {
+    const codePostal = codePostalInput?.value?.trim();
+    if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && selectedCommuneCode !== "Aucune commune trouvée") {
         const weatherData = await getWeather(selectedCommuneCode);
         displayWeather(weatherData);
     } else {
