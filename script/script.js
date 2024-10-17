@@ -13,6 +13,8 @@ const backgroundDiv = document.getElementById("background");
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
 
+let previousCodePostal = codePostalInput.value;
+
 const getCommunes = async (codePostal) => {
     try {
         const response = await fetch(`${apiGeoUrl}${codePostal}`);
@@ -36,9 +38,10 @@ const getWeather = async (inseeCode) => {
 };
 
 const updateCommuneOptions = async () => {
-    const codePostal = codePostalInput?.value?.trim();
-    if (codePostal?.length === 5 && /^\d+$/.test(codePostal)) {
-        const communes = await getCommunes(codePostal);
+    if (codePostalInput.value && (!/^\d+$/.test(codePostalInput.value) || codePostalInput.value?.length > 5)) codePostalInput.value = previousCodePostal
+
+    if (codePostalInput.value?.length === 5 && /^\d+$/.test(codePostalInput.value)) {
+        const communes = await getCommunes(codePostalInput.value);
         communeSelect.innerHTML = "";
 
         if (communes.length > 0) {
@@ -56,6 +59,8 @@ const updateCommuneOptions = async () => {
         communeSelect.style.display = 'none';
         resultDiv.innerHTML = "";
     }
+
+    previousCodePostal = codePostalInput.value;
 };
 
 const getWeatherIconAndDescription = (weather) => {
