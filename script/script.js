@@ -9,6 +9,7 @@ const headerSection = document.getElementById("headerSection");
 const mainSection = document.getElementById("mainSection");
 const footerSection = document.getElementById("footerSection");
 const backgroundDiv = document.getElementById("background");
+const labelCommune = document.getElementById("labelCommune");
 
 const apiGeoUrl = "https://geo.api.gouv.fr/communes?codePostal=";
 const apiWeatherUrl = "https://api.meteo-concept.com/api/forecast/daily?token=768561d5186a225a22564545f2f4bb3b85138f7039d78233825924501dbdcc78&insee=";
@@ -82,15 +83,18 @@ const updateCommuneOptions = async () => {
             });
 
             communeSelect.style.display = 'block';
+            labelCommune.style.display = 'block';
 
             if (communes.length === 1) await handleCommuneChange(communes[0].code);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
             communeSelect.style.display = 'block';
+            labelCommune.style.display = 'block';
             resultDiv.innerHTML = "";
         }
     } else {
         communeSelect.style.display = 'none';
+        labelCommune.style.display = 'none';
         resultDiv.innerHTML = "";
     }
 
@@ -232,6 +236,7 @@ const hideSettings = event => {
 
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
+    labelCommune.style.display = 'none';
 
     codePostalInput.addEventListener("input", updateCommuneOptions);
     communeSelect.addEventListener("change", () => handleCommuneChange(communeSelect.value));
