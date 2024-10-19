@@ -90,12 +90,12 @@ const updateCommuneOptions = async () => {
             });
 
             communeSelect.style.display = 'block';
-            labelCommune.style.display = 'block';
 
             // Si une seule commune est trouvée, affiche immédiatement la météo
-            if (communes.length === 1) await handleCommuneChange(communes[0].code);
+            (communes.length === 1) ? await handleCommuneChange(communes[0].code) : labelCommune.style.display = 'block';
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
+            labelCommune.innerHTML="Ecrivez un autre code postale"
             communeSelect.style.display = 'block';
             labelCommune.style.display = 'block';
             resultDiv.innerHTML = "";

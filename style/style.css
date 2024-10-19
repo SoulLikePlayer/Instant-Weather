@@ -61,6 +61,8 @@ label {
     margin-bottom: 10px;
 }
 
+
+
 input,
 select {
     display: block;
@@ -305,3 +307,4 @@ input[type="checkbox"]:checked + label::before {
         transform: scale(1);
     }
 }
+
