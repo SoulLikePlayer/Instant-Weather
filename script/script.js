@@ -1,3 +1,4 @@
+// Récupère les éléments du DOM pour l'interaction avec la page
 const nbJoursInput = document.getElementById("nbJours");
 const codePostalInput = document.getElementById("codePostal");
 const communeSelect = document.getElementById("commune");
@@ -19,6 +20,7 @@ let previousCodePostal = codePostalInput.value;
 let codePostalCache = {},
     weatherCache = {};
 
+// Affiche un message d'erreur basé sur la réponse ou l'erreur passée en paramètre
 const showError = (responseOrError) => {
     let errorMessage = "Une erreur est survenue";
 
@@ -33,6 +35,7 @@ const showError = (responseOrError) => {
     alert(errorMessage);
 };
 
+// Récupère les communes liées au code postal donné via une API
 const getCommunes = async (codePostal) => {
     const response = await fetch(`${apiGeoUrl}${codePostal}`).catch(showError);
 
@@ -44,6 +47,7 @@ const getCommunes = async (codePostal) => {
     return await response.json();
 };
 
+// Récupère les prévisions météorologiques basées sur le code INSEE de la commune via une API
 const getWeather = async (inseeCode) => {
     const response = await fetch(`${apiWeatherUrl}${inseeCode}`).catch(showError);
 
@@ -55,23 +59,26 @@ const getWeather = async (inseeCode) => {
     return await response.json();
 };
 
+// Met à jour les options de sélection de commune en fonction du code postal entré
 const updateCommuneOptions = async () => {
-    if (codePostalInput.value && (!/^\d+$/.test(codePostalInput.value) || codePostalInput.value?.length > 5)) codePostalInput.value = previousCodePostal
+    // Vérifie que le code postal est valide et n'est pas trop long
+    if (codePostalInput.value && (!/^\d+$/.test(codePostalInput.value) || codePostalInput.value?.length > 5)) codePostalInput.value = previousCodePostal;
 
     if (codePostalInput.value?.length === 5 && /^\d+$/.test(codePostalInput.value)) {
         let communes;
 
+        // Si le code postal est en cache, on l'utilise, sinon on appelle l'API
         if (codePostalCache.codePostal === codePostalInput.value) {
             communes = codePostalCache.data;
         } else {
             communes = await getCommunes(codePostalInput.value);
             codePostalCache.codePostal = codePostalInput.value;
-            
             codePostalCache.data = communes.map(({ code, nom }) => {
                 return { code, nom }
             });
         }
 
+        // Met à jour le champ de sélection des communes
         communeSelect.innerHTML = "";
         communeSelect.disabled = communes.length === 1;
         
@@ -85,6 +92,7 @@ const updateCommuneOptions = async () => {
             communeSelect.style.display = 'block';
             labelCommune.style.display = 'block';
 
+            // Si une seule commune est trouvée, affiche immédiatement la météo
             if (communes.length === 1) await handleCommuneChange(communes[0].code);
         } else {
             communeSelect.innerHTML = "<option>Aucune commune trouvée</option>";
@@ -101,6 +109,7 @@ const updateCommuneOptions = async () => {
     previousCodePostal = codePostalInput.value;
 };
 
+// Génère une icône de météo et une description en fonction des conditions météo fournies
 const getWeatherIconAndDescription = (weather) => {
     let weatherImage = "./ressources/Meteo/Couleur/Soleil.png";
     let meteoDescription = 'Ciel dégagé et ensoleillé';
@@ -139,6 +148,7 @@ const getWeatherIconAndDescription = (weather) => {
     return { weatherImage, meteoDescription, backgroundGradient };
 };
 
+// Affiche les prévisions météo pour les jours sélectionnés
 const displayWeather = (weatherData) => {
     resultDiv.innerHTML = ""; 
     
@@ -150,7 +160,6 @@ const displayWeather = (weatherData) => {
     const nbJours = Math.min(Math.max(parseInt(nbJoursInput.value, 10), 1), 7);
     
     const weatherHTML = [];
-    // Créez un délai d'animation qui sera basé sur l'index
     let animationDelay;
 
     weatherData.forecast.slice(0, nbJours).forEach((weather, index) => {
@@ -195,11 +204,13 @@ const displayWeather = (weatherData) => {
     }, animationDelay * nbJours);
 };
 
+// Gère le changement de commune et affiche les prévisions météo correspondantes
 const handleCommuneChange = async (selectedCommuneCode) => {
     const codePostal = codePostalInput.value;
     if (codePostal?.length === 5 && /^\d+$/.test(codePostal) && selectedCommuneCode && !["Aucune commune trouvée", "00000"].includes(selectedCommuneCode)) {
         let weatherData;
 
+        // Si les données météo sont en cache, les réutilise, sinon fait une requête API
         if (weatherCache.codeInsee === selectedCommuneCode) {
             weatherData = weatherCache;
         } else {
@@ -217,23 +228,27 @@ const handleCommuneChange = async (selectedCommuneCode) => {
     }
 };
 
+// Gère le changement du nombre de jours et met à jour les prévisions météo
 const handlenbJoursChange = () => {
     localStorage.nbJours = nbJoursInput.value;
     if (communeSelect.value) handleCommuneChange(communeSelect.value);
 };
 
+// Bascule l'affichage des paramètres utilisateur
 const toggleParametres = () => {
     parametresDiv.classList.toggle("visible");
     backgroundDiv.classList.toggle("invisible");
     document.body.classList.toggle("noScrollbar");
 };
 
+// Ferme les paramètres si l'utilisateur clique en dehors de la fenêtre des paramètres
 const hideSettings = event => {
     if (event?.target?.id === "background" && parametresDiv.classList.contains("visible")) {
         toggleParametres();
     }
 };
 
+// Initialisation de la page et des événements après le chargement du DOM
 window.addEventListener('DOMContentLoaded', () => {
     communeSelect.style.display = 'none';
     labelCommune.style.display = 'none';
@@ -243,7 +258,7 @@ window.addEventListener('DOMContentLoaded', () => {
     iconeParametres.addEventListener("click", toggleParametres);
     iconeCroix.addEventListener("click", toggleParametres);
     
-    // settings
+    // Réglages stockés dans le localStorage
     if (localStorage.nbJours) nbJoursInput.value = localStorage.nbJours;
     nbJoursInput.addEventListener("input", handlenbJoursChange);
 
@@ -259,4 +274,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener("click", hideSettings);
 });
-
